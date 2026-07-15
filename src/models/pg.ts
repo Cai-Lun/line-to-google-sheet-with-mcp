@@ -1,5 +1,7 @@
 import { Pool } from "pg"
 
+let pgInstance: Pg | null = null
+
 export class Pg {
 	public client: Pool;
 
@@ -8,6 +10,8 @@ export class Pg {
 	}
 
 	static async init() {
+		if (pgInstance) return pgInstance
+
 		const client = new Pool({
 			user: process.env.NEXT_SUPABASE_DB_USER,
 			password: process.env.NEXT_SUPABASE_DB_PASSWORD,
@@ -16,8 +20,10 @@ export class Pg {
 			database: "postgres",
       max: 5,		
 		})
-
-		await client.connect();
-		return new Pg(client);
+		
+		
+		pgInstance = new Pg(client)
+		// await client.connect();
+		return pgInstance
 	}
 }
