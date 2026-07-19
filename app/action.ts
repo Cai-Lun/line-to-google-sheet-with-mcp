@@ -2,7 +2,7 @@
 
 import { Sheet } from "@/src/models/sheet"
 import { getAccountBinding, updateAccountBindingValueByLineId } from "@/src/services/accountBinding"
-import { createSpreadSheet } from "@/src/services/sheet"
+import { createSpreadSheet, setSheetHeader } from "@/src/services/sheet"
 import { redirect } from "next/navigation"
 
 export const testGetAccountBinding = async () => {
@@ -39,7 +39,7 @@ export const testSetRefreshToken = async (code: string) => {
   }
 }
 
-export const testCreateSpreadSheet = async () => {
+export const testCreateSpreadSheetAndSetHeader = async () => {
   try {
     const spreadsheetId = await createSpreadSheet()
     if (!spreadsheetId) return "Create spreadsheet failed"
@@ -47,6 +47,7 @@ export const testCreateSpreadSheet = async () => {
     const accountBinding = await getAccountBinding()
     const lineId = accountBinding?.line_id
     const res = await updateAccountBindingValueByLineId("google_sheet_id", spreadsheetId, lineId)
+    await setSheetHeader(spreadsheetId)
 
     return res
   } catch (error) {

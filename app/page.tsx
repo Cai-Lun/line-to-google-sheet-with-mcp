@@ -5,7 +5,7 @@ import {
   testGetAccountBinding,
   testGetSheetAuthUrl,
   testSetRefreshToken,
-  testCreateSpreadSheet
+  testCreateSpreadSheetAndSetHeader
 } from "./action"
 
 export default function Home() {
@@ -30,8 +30,8 @@ export default function Home() {
     window.location.href = authUrl
   }
 
-  const execCreateSpreadSheet = async () => {
-    const res = await testCreateSpreadSheet()
+  const execCreateSpreadSheetAndSetHeader = async () => {
+    const res = await testCreateSpreadSheetAndSetHeader()
     console.log(res)
   }
 
@@ -40,7 +40,7 @@ export default function Home() {
       <main className="flex flex-1 w-full max-w-3xl flex-col py-32 px-16 bg-white dark:bg-black sm:items-start">
         <div className="flex flex-col gap-y-4">
           <button onClick={execGetSheetAuthUrl}>Get Sheet Authorization</button>
-          <button onClick={execCreateSpreadSheet}>Create Spreadsheet</button>
+          <button onClick={execCreateSpreadSheetAndSetHeader}>Create Spreadsheet</button>
         </div>
       </main>
     </div>
