@@ -33,3 +33,29 @@ export const createAccountBindingTable = async () => {
     throw error;
   }
 }
+
+export const insertValueIntoAccountBinding = async (columnName: string, value: string) => {
+  try {
+    const pg = await Pg.init()
+    const sql = `INSERT INTO account_binding (${columnName}) VALUES (${value})`
+    const res = await pg.client.query(sql, [value]);
+    console.log("insert success, res = ", res);
+    return res.rows;
+  } catch (error) {
+    console.error("insert failed, error = ", error);
+    throw error;
+  }
+}
+
+export const updateAccountBindingValueByLineId = async (columnName: string, value: string, lineId: string) => {
+  try {
+    const pg = await Pg.init()
+    const sql = `UPDATE account_binding SET ${columnName} = $1 WHERE line_id = $2`
+    const res = await pg.client.query(sql, [value, lineId])
+    console.log("update success, res = ", res)
+    return res.rows
+  } catch (error) {
+    console.error("update failed, error = ", error)
+    throw error;
+  }
+}
